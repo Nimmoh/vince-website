@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useCart } from '@/lib/CartContext';
 
 const categories = [
   { id: 'all', name: 'All Services', icon: '◈' },
@@ -13,6 +14,7 @@ const categories = [
 ];
 
 export default function ServicesPage() {
+  const { addToCart, cartCount } = useCart();
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [services, setServices] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -230,6 +232,14 @@ export default function ServicesPage() {
             <Link href="/about">About Us</Link>
             <Link href="/contact">Contact</Link>
           </nav>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+            <Link href="/cart">
+              <button style={{ position: 'relative', background: 'transparent', border: '1px solid rgba(201,168,76,0.3)', color: 'var(--gold-light)', cursor: 'pointer', padding: '0.6rem 1rem', fontSize: '1.2rem', borderRadius: '4px', transition: 'all 0.25s' }}>
+                🛒
+                {cartCount > 0 && <span style={{ position: 'absolute', top: '-8px', right: '-8px', background: 'var(--gold)', color: 'var(--ink)', fontSize: '0.7rem', fontWeight: 700, padding: '0.15rem 0.4rem', borderRadius: '100px', minWidth: '18px', textAlign: 'center' }}>{cartCount}</span>}
+              </button>
+            </Link>
+          </div>
         </div>
       </header>
 
@@ -287,10 +297,16 @@ export default function ServicesPage() {
                 <p className="service-desc">{service.description}</p>
                 <div className="service-price">{service.price}</div>
                 <button className="btn-inquire" onClick={() => {
-                  setSelectedService(service.name);
-                  setShowContact(true);
+                  addToCart({
+                    _id: service._id,
+                    name: service.name,
+                    price: service.price,
+                    category: service.category,
+                    image: service.image
+                  });
+                  alert(`${service.name} added to cart!`);
                 }}>
-                  Request Quote
+                  Add to Cart
                 </button>
               </div>
             </div>

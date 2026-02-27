@@ -3,6 +3,56 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 
+interface Order {
+  _id: string;
+  orderNumber: string;
+  customerName: string;
+  customerPhone: string;
+  customerEmail?: string;
+  items: {
+    serviceId: string;
+    serviceName: string;
+    price: string;
+    quantity: number;
+  }[];
+  totalAmount: string;
+  status: 'pending' | 'contacted' | 'confirmed' | 'completed' | 'cancelled';
+  notes?: string;
+  createdAt: string;
+}
+
+interface Stats {
+  overview: {
+    totalOrders: number;
+    totalCustomers: number;
+    totalInquiries: number;
+    totalServices: number;
+    totalRevenue: string;
+  };
+  orders: {
+    pending: number;
+    confirmed: number;
+    completed: number;
+  };
+  inquiries: {
+    total: number;
+    new: number;
+  };
+  topServices: {
+    _id: string;
+    count: number;
+    serviceId: string;
+  }[];
+  recentOrders: {
+    _id: string;
+    orderNumber: string;
+    customerName: string;
+    totalAmount: string;
+    status: string;
+    createdAt: string;
+  }[];
+}
+
 interface Service {
   _id: string;
   name: string;
@@ -44,10 +94,12 @@ interface Portfolio {
 }
 
 export default function AdminDashboard() {
-  const [activeTab, setActiveTab] = useState<'services' | 'inquiries' | 'portfolio'>('services');
+  const [activeTab, setActiveTab] = useState<'services' | 'inquiries' | 'portfolio' | 'orders' | 'stats'>('stats');
   const [services, setServices] = useState<Service[]>([]);
   const [inquiries, setInquiries] = useState<Inquiry[]>([]);
   const [portfolio, setPortfolio] = useState<Portfolio[]>([]);
+  const [orders, setOrders] = useState<Order[]>([]);
+  const [stats, setStats] = useState<Stats | null>(null);
   const [loading, setLoading] = useState(false);
   const [showForm, setShowForm] = useState(false);
   const [editingService, setEditingService] = useState<Service | null>(null);
@@ -63,6 +115,8 @@ export default function AdminDashboard() {
     fetchServices();
     fetchInquiries();
     fetchPortfolio();
+    fetchOrders();
+    fetchStats();
   }, []);
 
   const fetchServices = async () => {
@@ -101,6 +155,30 @@ export default function AdminDashboard() {
       }
     } catch (error) {
       console.error('Error fetching portfolio:', error);
+    }
+  };
+
+  const fetchOrders = async () => {
+    try {
+      const response = await fetch('/api/orders');
+      const data = await response.json();
+      if (data.success) {
+        setOrders(data.data);
+      }
+    } catch (error) {
+      console.error('Error fetching orders:', error);
+    }
+  };
+
+  const fetchStats = async () => {
+    try {
+      const response = await fetch('/api/stats');
+      const data = await response.json();
+      if (data.success) {
+        setStats(data.data);
+      }
+    } catch (error) {
+      console.error('Error fetching stats:', error);
     }
   };
 
@@ -203,6 +281,26 @@ export default function AdminDashboard() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex gap-4">
             <button
+              onClick={() => setActiveTab('stats')}
+              className={`px-4 py-3 font-medium border-b-2 transition-colors ${
+                activeTab === 'stats'
+                  ? 'border-green-600 text-green-600'
+                  : 'border-transparent text-gray-600 hover:text-gray-900'
+              }`}
+            >
+              Dashboard
+            </button>
+            <button
+              onClick={() => setActiveTab('orders')}
+              className={`px-4 py-3 font-medium border-b-2 transition-colors ${
+                activeTab === 'orders'
+                  ? 'border-green-600 text-green-600'
+                  : 'border-transparent text-gray-600 hover:text-gray-900'
+              }`}
+            >
+              Orders ({orders.length})
+            </button>
+            <button
               onClick={() => setActiveTab('services')}
               className={`px-4 py-3 font-medium border-b-2 transition-colors ${
                 activeTab === 'services'
@@ -237,6 +335,231 @@ export default function AdminDashboard() {
       </div>
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Stats Dashboard Tab */}
+        {activeTab === 'stats' && (
+          <div>
+            <h2 className="text-2xl font-semibold text-gray-900 mb-6">Dashboard Overview</h2>
+            
+            {stats ? (
+              <>
+                {/* Overview Cards */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
+                  <div className="bg-white rounded-lg shadow-sm p-6 border border-gray-200">
+                    <div className="text-sm text-gray-600 mb-1">Total Orders</div>
+                    <div className="text-3xl font-bold text-green-600">{stats.overview.totalOrders}</div>
+                  </div>
+                  <div className="bg-white rounded-lg shadow-sm p-6 border border-gray-200">
+                    <div className="text-sm text-gray-600 mb-1">Total Customers</div>
+                    <div className="text-3xl font-bold text-blue-600">{stats.overview.totalCustomers}</div>
+                  </div>
+                  <div className="bg-white rounded-lg shadow-sm p-6 border border-gray-200">
+                    <div className="text-sm text-gray-600 mb-1">Total Inquiries</div>
+                    <div className="text-3xl font-bold text-purple-600">{stats.overview.totalInquiries}</div>
+                  </div>
+                  <div className="bg-white rounded-lg shadow-sm p-6 border border-gray-200">
+                    <div className="text-sm text-gray-600 mb-1">Total Services</div>
+                    <div className="text-3xl font-bold text-orange-600">{stats.overview.totalServices}</div>
+                  </div>
+                  <div className="bg-white rounded-lg shadow-sm p-6 border border-gray-200">
+                    <div className="text-sm text-gray-600 mb-1">Total Revenue</div>
+                    <div className="text-2xl font-bold text-green-700">{stats.overview.totalRevenue}</div>
+                  </div>
+                </div>
+
+                {/* Order Status */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+                  <div className="bg-yellow-50 rounded-lg shadow-sm p-6 border border-yellow-200">
+                    <div className="text-sm text-yellow-800 mb-1">Pending Orders</div>
+                    <div className="text-3xl font-bold text-yellow-600">{stats.orders.pending}</div>
+                  </div>
+                  <div className="bg-blue-50 rounded-lg shadow-sm p-6 border border-blue-200">
+                    <div className="text-sm text-blue-800 mb-1">Confirmed Orders</div>
+                    <div className="text-3xl font-bold text-blue-600">{stats.orders.confirmed}</div>
+                  </div>
+                  <div className="bg-green-50 rounded-lg shadow-sm p-6 border border-green-200">
+                    <div className="text-sm text-green-800 mb-1">Completed Orders</div>
+                    <div className="text-3xl font-bold text-green-600">{stats.orders.completed}</div>
+                  </div>
+                </div>
+
+                {/* Top Services & Recent Orders */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                  <div className="bg-white rounded-lg shadow-sm p-6">
+                    <h3 className="text-lg font-semibold text-gray-900 mb-4">Top Requested Services</h3>
+                    {stats.topServices.length > 0 ? (
+                      <div className="space-y-3">
+                        {stats.topServices.map((service, index) => (
+                          <div key={service._id} className="flex items-center justify-between p-3 bg-gray-50 rounded">
+                            <div className="flex items-center gap-3">
+                              <span className="text-lg font-bold text-gray-400">#{index + 1}</span>
+                              <span className="font-medium text-gray-900">{service._id}</span>
+                            </div>
+                            <span className="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-semibold">
+                              {service.count} orders
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <p className="text-gray-500 text-center py-4">No service data yet</p>
+                    )}
+                  </div>
+
+                  <div className="bg-white rounded-lg shadow-sm p-6">
+                    <h3 className="text-lg font-semibold text-gray-900 mb-4">Recent Orders</h3>
+                    {stats.recentOrders.length > 0 ? (
+                      <div className="space-y-3">
+                        {stats.recentOrders.map((order) => (
+                          <div key={order._id} className="p-3 bg-gray-50 rounded">
+                            <div className="flex justify-between items-start mb-1">
+                              <span className="font-semibold text-gray-900">{order.orderNumber}</span>
+                              <span className={`text-xs px-2 py-1 rounded-full ${
+                                order.status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
+                                order.status === 'confirmed' ? 'bg-blue-100 text-blue-800' :
+                                order.status === 'completed' ? 'bg-green-100 text-green-800' :
+                                'bg-gray-100 text-gray-800'
+                              }`}>
+                                {order.status}
+                              </span>
+                            </div>
+                            <div className="text-sm text-gray-600">{order.customerName}</div>
+                            <div className="flex justify-between items-center mt-2">
+                              <span className="text-sm font-semibold text-green-600">{order.totalAmount}</span>
+                              <span className="text-xs text-gray-500">
+                                {new Date(order.createdAt).toLocaleDateString()}
+                              </span>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <p className="text-gray-500 text-center py-4">No orders yet</p>
+                    )}
+                  </div>
+                </div>
+              </>
+            ) : (
+              <div className="text-center py-12">
+                <p className="text-gray-500">Loading statistics...</p>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Orders Tab */}
+        {activeTab === 'orders' && (
+          <div>
+            <h2 className="text-xl font-semibold text-gray-900 mb-6">Customer Orders</h2>
+
+            {orders.length === 0 ? (
+              <div className="text-center py-12 bg-white rounded-lg">
+                <p className="text-gray-500">No orders yet.</p>
+              </div>
+            ) : (
+              <div className="space-y-4">
+                {orders.map((order) => (
+                  <div key={order._id} className="bg-white rounded-lg shadow-sm p-6">
+                    <div className="flex justify-between items-start mb-4">
+                      <div>
+                        <h4 className="font-semibold text-gray-900 text-lg">Order #{order.orderNumber}</h4>
+                        <p className="text-sm text-gray-600">
+                          {new Date(order.createdAt).toLocaleDateString('en-KE', {
+                            year: 'numeric',
+                            month: 'long',
+                            day: 'numeric',
+                            hour: '2-digit',
+                            minute: '2-digit',
+                          })}
+                        </p>
+                      </div>
+                      <span className={`px-3 py-1 rounded-full text-xs font-medium ${
+                        order.status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
+                        order.status === 'contacted' ? 'bg-blue-100 text-blue-800' :
+                        order.status === 'confirmed' ? 'bg-purple-100 text-purple-800' :
+                        order.status === 'completed' ? 'bg-green-100 text-green-800' :
+                        'bg-red-100 text-red-800'
+                      }`}>
+                        {order.status}
+                      </span>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                      <div>
+                        <p className="text-sm text-gray-600">Customer Name</p>
+                        <p className="font-medium text-gray-900">{order.customerName}</p>
+                      </div>
+                      <div>
+                        <p className="text-sm text-gray-600">Phone</p>
+                        <a href={`tel:${order.customerPhone}`} className="text-green-600 font-medium hover:underline">
+                          {order.customerPhone}
+                        </a>
+                      </div>
+                      {order.customerEmail && (
+                        <div>
+                          <p className="text-sm text-gray-600">Email</p>
+                          <a href={`mailto:${order.customerEmail}`} className="text-green-600 font-medium hover:underline">
+                            {order.customerEmail}
+                          </a>
+                        </div>
+                      )}
+                    </div>
+
+                    <div className="mb-4">
+                      <p className="text-sm text-gray-600 mb-2">Items Ordered</p>
+                      <div className="bg-gray-50 rounded p-3 space-y-2">
+                        {order.items.map((item, index) => (
+                          <div key={index} className="flex justify-between items-center">
+                            <span className="text-gray-900">
+                              {item.quantity}x {item.serviceName}
+                            </span>
+                            <span className="font-medium text-gray-700">{item.price}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    {order.notes && (
+                      <div className="mb-4">
+                        <p className="text-sm text-gray-600">Notes</p>
+                        <p className="text-gray-900">{order.notes}</p>
+                      </div>
+                    )}
+
+                    <div className="flex justify-between items-center pt-4 border-t">
+                      <span className="text-lg font-bold text-gray-900">Total: {order.totalAmount}</span>
+                      <select
+                        value={order.status}
+                        onChange={async (e) => {
+                          try {
+                            const response = await fetch(`/api/orders/${order._id}`, {
+                              method: 'PUT',
+                              headers: { 'Content-Type': 'application/json' },
+                              body: JSON.stringify({ status: e.target.value }),
+                            });
+                            if (response.ok) {
+                              fetchOrders();
+                              fetchStats();
+                            }
+                          } catch (error) {
+                            alert('Error updating order status');
+                          }
+                        }}
+                        className="px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                      >
+                        <option value="pending">Pending</option>
+                        <option value="contacted">Contacted</option>
+                        <option value="confirmed">Confirmed</option>
+                        <option value="completed">Completed</option>
+                        <option value="cancelled">Cancelled</option>
+                      </select>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+
         {/* Services Tab */}
         {activeTab === 'services' && (
           <div>

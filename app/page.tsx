@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useCart } from '@/lib/CartContext';
 
 const categories = [
   { id: 'all', name: 'All Services', },
@@ -35,13 +36,13 @@ const stats = [
 ];
 
 export default function Home() {
+  const { addToCart, cartCount } = useCart();
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [showContact, setShowContact] = useState(false);
   const [services, setServices] = useState(defaultServices);
   const [loading, setLoading] = useState(false);
   const [selectedService, setSelectedService] = useState<string>('');
-  const [hoveredCard, setHoveredCard] = useState<string | null>(null);
   const [inquiryForm, setInquiryForm] = useState({
     name: '',
     phone: '',
@@ -205,6 +206,37 @@ export default function Home() {
         .btn-cta:hover {
           transform: translateY(-1px);
           box-shadow: 0 4px 20px rgba(201,168,76,0.45);
+        }
+        .cart-icon-btn {
+          position: relative;
+          background: transparent;
+          border: 1px solid rgba(201,168,76,0.3);
+          color: var(--gold-light);
+          cursor: pointer;
+          padding: 0.6rem 1rem;
+          font-size: 1.2rem;
+          border-radius: 4px;
+          transition: all 0.25s;
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+        }
+        .cart-icon-btn:hover {
+          border-color: var(--gold);
+          background: rgba(201,168,76,0.1);
+        }
+        .cart-count {
+          position: absolute;
+          top: -8px;
+          right: -8px;
+          background: var(--gold);
+          color: var(--ink);
+          font-size: 0.7rem;
+          font-weight: 700;
+          padding: 0.15rem 0.4rem;
+          border-radius: 100px;
+          min-width: 18px;
+          text-align: center;
         }
 
         /* ── HERO ── */
@@ -501,6 +533,24 @@ export default function Home() {
           color: var(--ink);
           border-color: var(--gold);
         }
+        .btn-add-cart {
+          background: var(--gold);
+          color: var(--ink);
+          border: 1px solid var(--gold);
+          cursor: pointer;
+          padding: 0.55rem 1.1rem;
+          border-radius: 5px;
+          font-family: 'DM Sans', sans-serif;
+          font-size: 0.78rem; font-weight: 600;
+          letter-spacing: 0.06em; text-transform: uppercase;
+          transition: all 0.2s;
+          white-space: nowrap;
+        }
+        .btn-add-cart:hover {
+          background: var(--gold-dim);
+          border-color: var(--gold-dim);
+          transform: translateY(-1px);
+        }
 
         /* ── WHY US STRIP ── */
         .why-strip {
@@ -782,9 +832,17 @@ export default function Home() {
                 <li><Link href="/contact">Contact</Link></li>
               </ul>
             </nav>
-            <button className="btn-cta" onClick={() => setShowContact(true)}>
-              Get a Quote
-            </button>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+              <Link href="/cart">
+                <button className="cart-icon-btn">
+                  🛒
+                  {cartCount > 0 && <span className="cart-count">{cartCount}</span>}
+                </button>
+              </Link>
+              <button className="btn-cta" onClick={() => setShowContact(true)}>
+                Get a Quote
+              </button>
+            </div>
           </div>
         </header>
 
@@ -969,8 +1027,17 @@ export default function Home() {
                   <p className="card-desc">{service.description}</p>
                   <div className="card-footer">
                     <span className="card-price">{service.price}</span>
-                    <button className="btn-inquire" onClick={() => handleInquiry(service.name)}>
-                      Inquire 
+                    <button className="btn-add-cart" onClick={() => {
+                      addToCart({
+                        _id: service._id,
+                        name: service.name,
+                        price: service.price,
+                        category: service.category,
+                        image: service.image
+                      });
+                      alert(`${service.name} added to cart!`);
+                    }}>
+                      Add to Cart
                     </button>
                   </div>
                 </div>

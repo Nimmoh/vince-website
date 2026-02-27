@@ -6,9 +6,13 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "seed": "node scripts/seed.js",
+    "seed:clear": "node scripts/seed.js",
+    "db:check": "node scripts/check-db.js"
   },
   "dependencies": {
+    "dotenv": "^17.3.1",
     "mongodb": "^7.1.0",
     "mongoose": "^9.2.3",
     "next": "16.1.6",
