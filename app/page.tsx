@@ -874,7 +874,6 @@ export default function Home() {
           >
             <source src="/images/video1.mp4" type="video/mp4" />
           </video>
-          <div className="hero-grid-lines" />
           <div className="hero-inner">
             <div>
               <div className="hero-eyebrow">Nairobi, Kenya · Since 2012</div>
