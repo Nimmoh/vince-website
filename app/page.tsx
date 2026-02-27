@@ -709,10 +709,6 @@ export default function Home() {
           font-size: 0.85rem; color: rgba(255,255,255,0.45);
           display: flex; align-items: center; gap: 0.5rem;
         }
-        .footer-col ul li::before {
-          content: '—'; color: rgba(201,168,76,0.4);
-          font-size: 0.65rem;
-        }
         .footer-bottom {
           padding-top: 2rem;
           display: flex; align-items: center; justify-content: space-between;
@@ -774,7 +770,7 @@ export default function Home() {
             <Link href="/">
               <div className="logo-mark" style={{ cursor: 'pointer' }}>
                 <span className="logo-name">VINCEVIC SHADES</span>
-                <span className="logo-sub">Interprises · Kenya</span>
+                <span className="logo-sub">Enterprises · Kenya</span>
               </div>
             </Link>
             <nav>
