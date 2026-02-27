@@ -5,11 +5,12 @@ import Order from '@/models/Order';
 // GET single order
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     await connectDB();
-    const order = await Order.findById(params.id);
+    const { id } = await params;
+    const order = await Order.findById(id);
     
     if (!order) {
       return NextResponse.json(
@@ -30,14 +31,15 @@ export async function GET(
 // PUT update order
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     await connectDB();
     const body = await request.json();
+    const { id } = await params;
     
     const order = await Order.findByIdAndUpdate(
-      params.id,
+      id,
       body,
       { new: true, runValidators: true }
     );
@@ -61,11 +63,12 @@ export async function PUT(
 // DELETE order
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     await connectDB();
-    const order = await Order.findByIdAndDelete(params.id);
+    const { id } = await params;
+    const order = await Order.findByIdAndDelete(id);
     
     if (!order) {
       return NextResponse.json(

@@ -5,11 +5,12 @@ import Portfolio from '@/models/Portfolio';
 // GET single portfolio item
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     await connectDB();
-    const item = await Portfolio.findById(params.id);
+    const { id } = await params;
+    const item = await Portfolio.findById(id);
     
     if (!item) {
       return NextResponse.json(
@@ -30,14 +31,15 @@ export async function GET(
 // PUT update portfolio item
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     await connectDB();
     const body = await request.json();
+    const { id } = await params;
     
     const item = await Portfolio.findByIdAndUpdate(
-      params.id,
+      id,
       body,
       { new: true, runValidators: true }
     );
@@ -61,11 +63,12 @@ export async function PUT(
 // DELETE portfolio item
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     await connectDB();
-    const item = await Portfolio.findByIdAndDelete(params.id);
+    const { id } = await params;
+    const item = await Portfolio.findByIdAndDelete(id);
     
     if (!item) {
       return NextResponse.json(
