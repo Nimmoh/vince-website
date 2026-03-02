@@ -1,0 +1,15 @@
+<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="32" height="32" fill="#0f1117" rx="4"/>
+  
+  <!-- Simple gazebo icon -->
+  <g transform="translate(16, 8)">
+    <!-- Roof -->
+    <path d="M 0 2 L -8 8 L 8 8 Z" fill="#c9a84c"/>
+    <!-- Posts -->
+    <line x1="-5" y1="8" x2="-5" y2="18" stroke="#c9a84c" stroke-width="1.5"/>
+    <line x1="5" y1="8" x2="5" y2="18" stroke="#c9a84c" stroke-width="1.5"/>
+    <!-- Base -->
+    <line x1="-7" y1="18" x2="7" y2="18" stroke="#c9a84c" stroke-width="2"/>
+  </g>
+</svg>

@@ -103,6 +103,7 @@ export default function AdminDashboard() {
   const [loading, setLoading] = useState(false);
   const [showForm, setShowForm] = useState(false);
   const [editingService, setEditingService] = useState<Service | null>(null);
+  const [uploadingImage, setUploadingImage] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     category: 'shades',
@@ -179,6 +180,44 @@ export default function AdminDashboard() {
       }
     } catch (error) {
       console.error('Error fetching stats:', error);
+    }
+  };
+
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    // Validate file type
+    if (!file.type.startsWith('image/')) {
+      alert('Please select an image file');
+      return;
+    }
+
+    // Validate file size (max 5MB)
+    if (file.size > 5 * 1024 * 1024) {
+      alert('Image size should be less than 5MB');
+      return;
+    }
+
+    try {
+      setUploadingImage(true);
+
+      // Convert image to base64
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const base64String = reader.result as string;
+        setFormData({ ...formData, image: base64String });
+        setUploadingImage(false);
+      };
+      reader.onerror = () => {
+        alert('Error reading file');
+        setUploadingImage(false);
+      };
+      reader.readAsDataURL(file);
+    } catch (error) {
+      console.error('Error uploading image:', error);
+      alert('Failed to upload image');
+      setUploadingImage(false);
     }
   };
 
@@ -606,7 +645,7 @@ export default function AdminDashboard() {
                         required
                         value={formData.name}
                         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 text-gray-900"
                         placeholder="e.g., Premium Car Shade"
                       />
                     </div>
@@ -619,7 +658,7 @@ export default function AdminDashboard() {
                         required
                         value={formData.category}
                         onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 text-gray-900"
                       >
                         <option value="shades">Shades</option>
                         <option value="gazebo">Gazebos</option>
@@ -637,24 +676,94 @@ export default function AdminDashboard() {
                         required
                         value={formData.price}
                         onChange={(e) => setFormData({ ...formData, price: e.target.value })}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 text-gray-900"
                         placeholder="e.g., KSh 45,000"
                       />
                     </div>
 
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">
-                        Image Path or Icon
+                        Service Image
                       </label>
-                      <input
-                        type="text"
-                        value={formData.image}
-                        onChange={(e) => setFormData({ ...formData, image: e.target.value })}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
-                        placeholder="e.g., /images/shade1.jpg or ☂️"
-                      />
-                      <p className="text-xs text-gray-500 mt-1">
-                        Use /images/filename.jpg for uploaded images or emoji for icons
+                      
+                      {/* Image Preview */}
+                      {formData.image && (
+                        <div className="mb-3">
+                          <div className="relative w-full h-48 bg-gray-100 rounded-lg overflow-hidden border border-gray-300">
+                            {formData.image.startsWith('data:image') || formData.image.startsWith('/images/') ? (
+                              <img
+                                src={formData.image}
+                                alt="Preview"
+                                className="w-full h-full object-cover"
+                              />
+                            ) : (
+                              <div className="w-full h-full flex items-center justify-center text-6xl">
+                                {formData.image}
+                              </div>
+                            )}
+                            <button
+                              type="button"
+                              onClick={() => setFormData({ ...formData, image: '' })}
+                              className="absolute top-2 right-2 bg-red-500 hover:bg-red-600 text-white p-2 rounded-full transition-colors"
+                              title="Remove image"
+                            >
+                              ✕
+                            </button>
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Upload Button */}
+                      <div className="space-y-2">
+                        <label className="block">
+                          <input
+                            type="file"
+                            accept="image/*"
+                            onChange={handleImageUpload}
+                            className="hidden"
+                            id="image-upload"
+                            disabled={uploadingImage}
+                          />
+                          <div className="cursor-pointer bg-blue-50 hover:bg-blue-100 border-2 border-dashed border-blue-300 rounded-lg p-4 text-center transition-colors">
+                            {uploadingImage ? (
+                              <div className="flex items-center justify-center gap-2">
+                                <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-blue-600"></div>
+                                <span className="text-blue-600 font-medium">Uploading...</span>
+                              </div>
+                            ) : (
+                              <>
+                                <div className="text-3xl mb-2">📸</div>
+                                <div className="text-sm font-medium text-gray-700">
+                                  Click to upload image
+                                </div>
+                                <div className="text-xs text-gray-500 mt-1">
+                                  PNG, JPG, JPEG up to 5MB
+                                </div>
+                              </>
+                            )}
+                          </div>
+                        </label>
+
+                        {/* OR divider */}
+                        <div className="flex items-center gap-2">
+                          <div className="flex-1 border-t border-gray-300"></div>
+                          <span className="text-xs text-gray-500 uppercase">or</span>
+                          <div className="flex-1 border-t border-gray-300"></div>
+                        </div>
+
+                        {/* Manual path input */}
+                        <input
+                          type="text"
+                          value={formData.image.startsWith('data:image') ? '' : formData.image}
+                          onChange={(e) => setFormData({ ...formData, image: e.target.value })}
+                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 text-sm text-gray-900"
+                          placeholder="Or enter image path: /images/shade1.jpg or emoji ☂️"
+                          disabled={uploadingImage}
+                        />
+                      </div>
+                      
+                      <p className="text-xs text-gray-500 mt-2">
+                        💡 Tip: Upload an image, use existing path (/images/...), or use an emoji icon
                       </p>
                     </div>
 
@@ -667,7 +776,7 @@ export default function AdminDashboard() {
                         rows={4}
                         value={formData.description}
                         onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 text-gray-900"
                         placeholder="Describe the service..."
                       />
                     </div>
@@ -715,7 +824,7 @@ export default function AdminDashboard() {
                 {services.map((service) => (
                   <div key={service._id} className="bg-white rounded-lg shadow-sm overflow-hidden">
                     <div className="aspect-square bg-gradient-to-br from-gray-100 to-gray-200 relative overflow-hidden">
-                      {service.image && service.image.startsWith('/images/') ? (
+                      {service.image && (service.image.startsWith('/images/') || service.image.startsWith('data:image')) ? (
                         <img
                           src={service.image}
                           alt={service.name}

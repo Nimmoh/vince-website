@@ -277,15 +277,24 @@ export default function ServicesPage() {
         ) : (
           filteredServices.map(service => (
             <div key={service._id} className="service-card">
-              {service.image && service.image.startsWith('/images/') ? (
-                <Image
-                  src={service.image}
-                  alt={service.name}
-                  width={400}
-                  height={280}
-                  className="service-image"
-                  style={{ width: '100%', height: '280px', objectFit: 'cover' }}
-                />
+              {service.image && (service.image.startsWith('/images/') || service.image.startsWith('data:image')) ? (
+                service.image.startsWith('data:image') ? (
+                  <img
+                    src={service.image}
+                    alt={service.name}
+                    className="service-image"
+                    style={{ width: '100%', height: '280px', objectFit: 'cover' }}
+                  />
+                ) : (
+                  <Image
+                    src={service.image}
+                    alt={service.name}
+                    width={400}
+                    height={280}
+                    className="service-image"
+                    style={{ width: '100%', height: '280px', objectFit: 'cover' }}
+                  />
+                )
               ) : (
                 <div className="service-image" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '4rem' }}>
                   {service.image || categoryIcon(service.category)}

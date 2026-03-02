@@ -1,0 +1,96 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background gradient -->
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f1117;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1c2030;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#e4c97a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#c9a84c;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bgGrad)"/>
+  
+  <!-- Decorative grid pattern -->
+  <g opacity="0.03">
+    <line x1="0" y1="0" x2="1200" y2="630" stroke="#c9a84c" stroke-width="1"/>
+    <line x1="0" y1="630" x2="1200" y2="0" stroke="#c9a84c" stroke-width="1"/>
+    <circle cx="600" cy="315" r="400" fill="none" stroke="#c9a84c" stroke-width="1"/>
+    <circle cx="600" cy="315" r="300" fill="none" stroke="#c9a84c" stroke-width="1"/>
+  </g>
+  
+  <!-- Main icon - Large gazebo structure -->
+  <g transform="translate(300, 180)">
+    <!-- Top ornament -->
+    <circle cx="0" cy="-30" r="20" fill="url(#goldGrad)"/>
+    <rect x="-8" y="-10" width="16" height="40" fill="#e4c97a" rx="4"/>
+    
+    <!-- Roof structure -->
+    <path d="M -180 120 L 0 30 L 180 120" fill="none" stroke="url(#goldGrad)" stroke-width="12" stroke-linecap="round"/>
+    <path d="M -160 135 L 0 55 L 160 135" fill="none" stroke="#e4c97a" stroke-width="8" stroke-linecap="round"/>
+    
+    <!-- Shade/canopy -->
+    <path d="M -200 150 Q 0 90 200 150" fill="#c9a84c" opacity="0.2"/>
+    <path d="M -200 150 Q 0 90 200 150" fill="none" stroke="url(#goldGrad)" stroke-width="6"/>
+    
+    <!-- Support columns -->
+    <rect x="-160" y="150" width="20" height="200" fill="url(#goldGrad)" rx="4"/>
+    <rect x="-10" y="150" width="20" height="200" fill="url(#goldGrad)" rx="4"/>
+    <rect x="140" y="150" width="20" height="200" fill="url(#goldGrad)" rx="4"/>
+    
+    <!-- Column highlights -->
+    <rect x="-156" y="150" width="8" height="200" fill="#e4c97a" opacity="0.5" rx="2"/>
+    <rect x="-6" y="150" width="8" height="200" fill="#e4c97a" opacity="0.5" rx="2"/>
+    <rect x="144" y="150" width="8" height="200" fill="#e4c97a" opacity="0.5" rx="2"/>
+    
+    <!-- Base platform -->
+    <rect x="-190" y="350" width="380" height="24" fill="url(#goldGrad)" rx="6"/>
+    <rect x="-190" y="350" width="380" height="10" fill="#e4c97a" rx="4"/>
+    
+    <!-- Decorative base details -->
+    <circle cx="-160" cy="362" r="10" fill="#e4c97a"/>
+    <circle cx="0" cy="362" r="10" fill="#e4c97a"/>
+    <circle cx="160" cy="362" r="10" fill="#e4c97a"/>
+  </g>
+  
+  <!-- Text content -->
+  <g transform="translate(650, 200)">
+    <!-- Company name -->
+    <text x="0" y="0" font-family="serif" font-size="72" font-weight="700" fill="#ffffff" letter-spacing="4">
+      VINCEVIC SHADES
+    </text>
+    <text x="0" y="60" font-family="sans-serif" font-size="28" font-weight="600" fill="#c9a84c" letter-spacing="8">
+      INTERPRISES
+    </text>
+    
+    <!-- Decorative line -->
+    <line x1="0" y1="90" x2="400" y2="90" stroke="#c9a84c" stroke-width="3"/>
+    
+    <!-- Tagline -->
+    <text x="0" y="140" font-family="serif" font-size="36" font-weight="400" fill="#e4c97a" font-style="italic">
+      Premium Outdoor Structures
+    </text>
+    
+    <!-- Services -->
+    <text x="0" y="200" font-family="sans-serif" font-size="24" font-weight="400" fill="rgba(255,255,255,0.7)">
+      • Shades  • Gazebos  • Pagolas  • Gates
+    </text>
+    
+    <!-- Location -->
+    <text x="0" y="260" font-family="sans-serif" font-size="22" font-weight="500" fill="#c9a84c">
+      📍 Serving All of Kenya
+    </text>
+    
+    <!-- Contact -->
+    <text x="0" y="310" font-family="sans-serif" font-size="22" font-weight="500" fill="rgba(255,255,255,0.6)">
+      📞 0720 120 616  •  0716 632 889
+    </text>
+  </g>
+  
+  <!-- Bottom decorative border -->
+  <rect x="0" y="610" width="1200" height="20" fill="url(#goldGrad)"/>
+  <rect x="0" y="610" width="1200" height="8" fill="#e4c97a"/>
+</svg>

@@ -1,0 +1,46 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="512" height="512" fill="#0f1117" rx="80"/>
+  
+  <!-- Decorative border -->
+  <rect x="40" y="40" width="432" height="432" fill="none" stroke="#c9a84c" stroke-width="4" rx="60"/>
+  
+  <!-- Main icon - Elegant gazebo/shade structure -->
+  <g transform="translate(256, 140)">
+    <!-- Top decorative element -->
+    <circle cx="0" cy="-20" r="12" fill="#c9a84c"/>
+    <line x1="0" y1="-8" x2="0" y2="10" stroke="#e4c97a" stroke-width="6"/>
+    
+    <!-- Roof structure -->
+    <path d="M -120 80 L 0 10 L 120 80" fill="none" stroke="#c9a84c" stroke-width="8" stroke-linecap="round"/>
+    <path d="M -100 90 L 0 30 L 100 90" fill="none" stroke="#e4c97a" stroke-width="6" stroke-linecap="round"/>
+    
+    <!-- Shade/canopy -->
+    <path d="M -140 100 Q 0 60 140 100" fill="#c9a84c" opacity="0.3"/>
+    <path d="M -140 100 Q 0 60 140 100" fill="none" stroke="#c9a84c" stroke-width="4"/>
+    
+    <!-- Support columns -->
+    <rect x="-110" y="100" width="12" height="140" fill="#c9a84c" rx="2"/>
+    <rect x="-6" y="100" width="12" height="140" fill="#c9a84c" rx="2"/>
+    <rect x="98" y="100" width="12" height="140" fill="#c9a84c" rx="2"/>
+    
+    <!-- Column highlights -->
+    <rect x="-108" y="100" width="4" height="140" fill="#e4c97a" opacity="0.5" rx="1"/>
+    <rect x="-4" y="100" width="4" height="140" fill="#e4c97a" opacity="0.5" rx="1"/>
+    <rect x="100" y="100" width="4" height="140" fill="#e4c97a" opacity="0.5" rx="1"/>
+    
+    <!-- Base platform -->
+    <rect x="-130" y="240" width="260" height="16" fill="#c9a84c" rx="4"/>
+    <rect x="-130" y="240" width="260" height="6" fill="#e4c97a" rx="2"/>
+    
+    <!-- Decorative base details -->
+    <circle cx="-110" cy="248" r="6" fill="#e4c97a"/>
+    <circle cx="0" cy="248" r="6" fill="#e4c97a"/>
+    <circle cx="110" cy="248" r="6" fill="#e4c97a"/>
+  </g>
+  
+  <!-- Company initials at bottom -->
+  <text x="256" y="440" font-family="serif" font-size="48" font-weight="700" fill="#c9a84c" text-anchor="middle" letter-spacing="4">
+    VS
+  </text>
+</svg>

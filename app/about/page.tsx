@@ -214,7 +214,7 @@ export default function AboutPage() {
           <Link href="/">
             <div style={{ cursor: 'pointer' }}>
               <div className="logo-name">VINCEVIC SHADES</div>
-              <div className="logo-sub">INTERPRISES</div>
+              <div className="logo-sub">ENTERPRISES</div>
             </div>
           </Link>
           <nav className="nav-links">
@@ -231,7 +231,7 @@ export default function AboutPage() {
       <div className="page-hero">
         <h1 className="page-title">About Us</h1>
         <p className="page-subtitle">
-          Building Kenya's finest outdoor structures since 2012
+          Building Kenya's finest outdoor structures 
         </p>
       </div>
 
@@ -240,9 +240,9 @@ export default function AboutPage() {
         <div className="section-grid">
           <div className="section-content">
             <h2>Our Story</h2>
-            <p>
+            {/* <p>
               Founded in 2012, Vincevic Shades Interprises has grown to become Kenya's premier provider of outdoor structures. What started as a small workshop in Nairobi has evolved into a trusted name across 47 counties.
-            </p>
+            </p> */}
             <p>
               We specialize in designing, fabricating, and installing premium car shades, elegant gazebos, architectural pagolas, and automated security gates. Every project reflects our commitment to quality craftsmanship and customer satisfaction.
             </p>
@@ -282,27 +282,7 @@ export default function AboutPage() {
         </div>
       </div>
 
-      {/* Stats Section */}
-      <div className="stats-section">
-        <div className="stats-grid">
-          <div>
-            <div className="stat-value">500+</div>
-            <div className="stat-label">Projects Completed</div>
-          </div>
-          <div>
-            <div className="stat-value">12+</div>
-            <div className="stat-label">Years Experience</div>
-          </div>
-          <div>
-            <div className="stat-value">98%</div>
-            <div className="stat-label">Client Satisfaction</div>
-          </div>
-          <div>
-            <div className="stat-value">47</div>
-            <div className="stat-label">Counties Served</div>
-          </div>
-        </div>
-      </div>
+    
 
       {/* Our Values */}
       <div className="content-section">
@@ -313,28 +293,24 @@ export default function AboutPage() {
         </div>
         <div className="values-grid">
           <div className="value-card">
-            <div className="value-icon">⬡</div>
             <h3 className="value-title">Quality First</h3>
             <p className="value-desc">
               We never compromise on materials or workmanship. Every structure is built to last.
             </p>
           </div>
           <div className="value-card">
-            <div className="value-icon">◎</div>
             <h3 className="value-title">Customer Focus</h3>
             <p className="value-desc">
               Your vision guides our work. We listen, understand, and deliver beyond expectations.
             </p>
           </div>
           <div className="value-card">
-            <div className="value-icon">▲</div>
             <h3 className="value-title">Innovation</h3>
             <p className="value-desc">
               We embrace new techniques and designs while honoring traditional craftsmanship.
             </p>
           </div>
           <div className="value-card">
-            <div className="value-icon">◫</div>
             <h3 className="value-title">Integrity</h3>
             <p className="value-desc">
               Honest pricing, transparent processes, and reliable service in every interaction.

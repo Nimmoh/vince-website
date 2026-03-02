@@ -1,0 +1,28 @@
+<svg width="200" height="60" viewBox="0 0 200 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="200" height="60" fill="#0f1117" rx="4"/>
+  
+  <!-- Decorative lines -->
+  <line x1="10" y1="30" x2="30" y2="30" stroke="#c9a84c" stroke-width="2"/>
+  <line x1="170" y1="30" x2="190" y2="30" stroke="#c9a84c" stroke-width="2"/>
+  
+  <!-- Icon - Stylized shade/gazebo structure -->
+  <g transform="translate(40, 15)">
+    <!-- Roof/shade -->
+    <path d="M 15 5 L 5 15 L 25 15 Z" fill="#c9a84c"/>
+    <path d="M 15 5 L 5 15 L 25 15 Z" fill="none" stroke="#e4c97a" stroke-width="0.5"/>
+    <!-- Support posts -->
+    <line x1="8" y1="15" x2="8" y2="25" stroke="#c9a84c" stroke-width="1.5"/>
+    <line x1="22" y1="15" x2="22" y2="25" stroke="#c9a84c" stroke-width="1.5"/>
+    <!-- Base -->
+    <line x1="5" y1="25" x2="25" y2="25" stroke="#c9a84c" stroke-width="2"/>
+  </g>
+  
+  <!-- Text -->
+  <text x="75" y="25" font-family="serif" font-size="16" font-weight="700" fill="#ffffff" letter-spacing="1">
+    VINCEVIC
+  </text>
+  <text x="75" y="40" font-family="sans-serif" font-size="8" font-weight="600" fill="#c9a84c" letter-spacing="3">
+    SHADES INTERPRISES
+  </text>
+</svg>
