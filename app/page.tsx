@@ -1318,15 +1318,9 @@ export default function VincevicMarketplace() {
 
                 <p className="detail-desc" style={{ marginTop: ".75rem" }}>{selectedListing.desc}</p>
 
-                <div style={{ fontWeight: 700, fontSize: ".8rem", textTransform: "uppercase", letterSpacing: ".06em", color: "var(--muted)", marginBottom: ".5rem" }}>Key Features</div>
-                <div className="detail-specs-grid">
-                  {selectedListing.specs.map((s: string) => <div key={s} className="detail-spec">{s}</div>)}
-                </div>
+                
 
-                <div style={{ background: "#fffbf0", border: "1px solid rgba(201,168,76,.2)", borderRadius: "9px", padding: ".85rem 1rem", marginTop: ".75rem" }}>
-                  <div style={{ fontSize: ".75rem", fontWeight: 700, color: "#8a6f34", textTransform: "uppercase", letterSpacing: ".06em", marginBottom: ".3rem" }}>Free Site Visit Included</div>
-                  <div style={{ fontSize: ".83rem", color: "#78716c" }}>We visit your site, assess requirements, and provide a detailed custom quote at no cost.</div>
-                </div>
+               
               </div>
 
               <div className="detail-right">
@@ -1338,18 +1332,9 @@ export default function VincevicMarketplace() {
                         {selectedListing.seller.name}
                         <span className="verified-chip"> VERIFIED</span>
                       </div>
-                      <div className="seller-since">Serving Kenya since {selectedListing.seller.since}</div>
                     </div>
                   </div>
-                  <div style={{ display: "flex", gap: "1rem", paddingTop: ".75rem", borderTop: "1px solid var(--border)" }}>
-                    {[[ "500+", "Projects"], [ "4.8", "Rating"], [ "< 2hr", "Response"]].map(([icon, val, lbl]) => (
-                      <div key={lbl} style={{ textAlign: "center", flex: 1 }}>
-                        <div style={{ fontSize: "1rem" }}>{icon}</div>
-                        <div style={{ fontWeight: 800, fontSize: ".88rem", color: "var(--brand)" }}>{val}</div>
-                        <div style={{ fontSize: ".68rem", color: "var(--muted)", textTransform: "uppercase", letterSpacing: ".06em" }}>{lbl}</div>
-                      </div>
-                    ))}
-                  </div>
+                
                 </div>
 
                 {/* Inquiry form */}
