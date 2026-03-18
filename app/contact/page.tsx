@@ -288,8 +288,19 @@ export default function ContactPage() {
       <div className="page-hero">
         <h1 className="page-title">Get In Touch</h1>
         <p className="page-subtitle">
-          Ready to transform your outdoor space? We're here to help
+          Ready to transform your outdoor space? We respond within 2 hours on WhatsApp.
         </p>
+        <div style={{ marginTop: '1.5rem', display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+          <a href="https://wa.me/254720120616?text=Hello%20Vincevic%20Shades!%20I%27d%20like%20a%20free%20quote."
+            target="_blank" rel="noopener noreferrer"
+            style={{ display: 'inline-flex', alignItems: 'center', gap: '.5rem', background: '#25d366', color: '#fff', padding: '.7rem 1.5rem', borderRadius: '6px', fontWeight: 700, textDecoration: 'none', fontSize: '.9rem' }}>
+            💬 Chat on WhatsApp
+          </a>
+          <a href="tel:0720120616"
+            style={{ display: 'inline-flex', alignItems: 'center', gap: '.5rem', background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', color: '#fff', padding: '.7rem 1.5rem', borderRadius: '6px', fontWeight: 700, textDecoration: 'none', fontSize: '.9rem' }}>
+            📞 Call Now
+          </a>
+        </div>
       </div>
 
       {/* Contact Container */}
@@ -408,18 +419,7 @@ export default function ContactPage() {
         </div>
       </div>
 
-      {/* Map Section */}
-      <div className="map-section">
-        <div className="map-container">
-          <h2 className="map-title">We Serve All of Kenya</h2>
-          <p className="map-text">
-            From Nairobi to Mombasa, Kisumu to Eldoret we bring quality outdoor structures to all 47 counties.
-            Contact us today for a free consultation and quote for your location.
-          </p>
-       
-        </div>
-      </div>
-
+    
       {/* Footer */}
       <footer style={{ background: 'var(--ink)', color: 'var(--white)', padding: '4rem 2rem 2rem' }}>
         <div style={{ maxWidth: '1280px', margin: '0 auto' }}>

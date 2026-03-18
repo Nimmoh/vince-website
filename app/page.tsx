@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from "react";
+import Link from "next/link";
 
 // ─── DATA ───────────────────────────────────────────────────────────────────
 const CATEGORIES = [
@@ -168,6 +169,7 @@ const TRUST_BADGES = [
 
 // ─── HELPERS ─────────────────────────────────────────────────────────────────
 const formatPrice = (n: number) => `KSh ${n.toLocaleString()}`;
+const WA_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "254720120616";
 const Stars = ({ rating }: { rating: number }) => {
   const full = Math.floor(rating);
   return (
@@ -203,12 +205,19 @@ export default function VincevicMarketplace() {
     setTimeout(() => setToast(null), 3000);
   };
 
+  const buildWhatsAppQuote = () => {
+    const lines = cartItems.map(i => `• ${i.title} — ${i.priceDisplay}`).join("\n");
+    const total = formatPrice(cartItems.reduce((s, i) => s + i.price, 0));
+    const msg = `Hello Vincevic Shades! I'd like a quote for the following:\n\n${lines}\n\nEstimated Total: ${total}\n\nPlease get back to me. Thank you!`;
+    return `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`;
+  };
+
   const detectLocation = () => {
     setLocationDetecting(true);
     setTimeout(() => {
       setLocation("Nairobi CBD");
       setLocationDetecting(false);
-      showToast("📍 Location detected: Nairobi CBD");
+      showToast(" Location detected: Nairobi CBD");
     }, 1400);
   };
 
@@ -305,75 +314,135 @@ export default function VincevicMarketplace() {
 
         /* ── HERO SEARCH ── */
         .hero-search-section {
-          background: linear-gradient(135deg, var(--brand) 0%, #1c2030 60%, #2d3448 100%);
-          padding: 2.5rem 1.25rem 3rem;
+          background: linear-gradient(160deg, #0a0d14 0%, #111827 45%, #1a2235 100%);
+          padding: 3.5rem 1.25rem 4rem;
           position: relative; overflow: hidden;
+          min-height: 480px;
+          display: flex; align-items: center;
         }
         .hero-search-section::before {
           content: '';
           position: absolute; inset: 0;
-          background-image: radial-gradient(rgba(201,168,76,.06) 1px, transparent 1px);
-          background-size: 28px 28px;
+          background-image: url('/images/car-shade.jpeg');
+          background-size: cover; background-position: center;
+          opacity: .13;
         }
-        .hero-search-inner { max-width: 900px; margin: 0 auto; position: relative; z-index: 1; }
+        .hero-search-section::after {
+          content: '';
+          position: absolute; inset: 0;
+          background: radial-gradient(ellipse 80% 60% at 50% 100%, rgba(201,168,76,.12) 0%, transparent 70%);
+        }
+        .hero-search-inner { max-width: 860px; margin: 0 auto; position: relative; z-index: 1; width: 100%; }
+
+        .hero-eyebrow {
+          display: inline-flex; align-items: center; gap: .5rem;
+          background: rgba(201,168,76,.15);
+          border: 1px solid rgba(201,168,76,.3);
+          border-radius: 100px;
+          padding: .3rem .9rem;
+          font-size: .72rem; font-weight: 700;
+          color: var(--gold-light); letter-spacing: .12em;
+          text-transform: uppercase;
+          margin-bottom: 1.1rem;
+        }
+        .hero-eyebrow-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); animation: pulse-dot 2s infinite; }
+        @keyframes pulse-dot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(.7)} }
+
         .hero-title {
           font-family: 'Instrument Serif', serif;
-          font-size: clamp(1.8rem, 4vw, 2.8rem);
-          color: #fff; text-align: center; margin-bottom: .5rem; line-height: 1.15;
+          font-size: clamp(2.2rem, 5vw, 3.6rem);
+          color: #fff; text-align: center; margin-bottom: .75rem; line-height: 1.1;
+          letter-spacing: -.01em;
         }
         .hero-title em { color: var(--gold-light); font-style: italic; }
+        .hero-title .hero-title-line2 { display: block; font-size: clamp(1.5rem, 3.5vw, 2.4rem); color: rgba(255,255,255,.75); }
+
         .hero-sub {
-          text-align: center; color: rgba(255,255,255,.5);
-          font-size: .9rem; margin-bottom: 1.75rem;
+          text-align: center; color: rgba(255,255,255,.55);
+          font-size: .95rem; margin-bottom: 2rem; line-height: 1.6;
+          max-width: 560px; margin-left: auto; margin-right: auto;
         }
+
+        .hero-stats-row {
+          display: flex; justify-content: center; gap: 2rem;
+          margin-bottom: 2rem; flex-wrap: wrap;
+        }
+        .hero-stat {
+          text-align: center;
+        }
+        .hero-stat-num {
+          font-family: 'Instrument Serif', serif;
+          font-size: 1.6rem; color: var(--gold-light); line-height: 1;
+        }
+        .hero-stat-label {
+          font-size: .7rem; color: rgba(255,255,255,.45);
+          text-transform: uppercase; letter-spacing: .1em; margin-top: .2rem;
+        }
+        .hero-stat-divider { width: 1px; background: rgba(255,255,255,.1); align-self: stretch; }
 
         /* ── MAIN SEARCH BOX ── */
         .search-box {
           background: var(--white);
-          border-radius: 14px;
-          padding: .45rem .45rem .45rem .45rem;
+          border-radius: 16px;
+          padding: .5rem .5rem .5rem .5rem;
           display: flex; gap: .5rem; align-items: stretch;
-          box-shadow: 0 8px 32px rgba(0,0,0,.25);
+          box-shadow: 0 20px 60px rgba(0,0,0,.4), 0 0 0 1px rgba(201,168,76,.15);
         }
         .search-location-btn {
           display: flex; align-items: center; gap: .4rem;
-          padding: .6rem 1rem;
+          padding: .65rem 1rem;
           background: var(--surface);
           border: 1.5px solid var(--border);
-          border-radius: 9px;
+          border-radius: 10px;
           font-family: 'Plus Jakarta Sans', sans-serif;
           font-size: .82rem; font-weight: 600;
           color: var(--brand); cursor: pointer;
           white-space: nowrap; flex-shrink: 0;
           transition: all .2s;
         }
-        .search-location-btn:hover { border-color: var(--gold); }
+        .search-location-btn:hover { border-color: var(--gold); background: var(--gold-pale); }
         .search-location-btn .loc-pin { color: #ef4444; font-size: 1rem; }
         .search-divider { width: 1px; background: var(--border); flex-shrink: 0; margin: .3rem 0; }
-        .search-input-wrap { flex: 1; position: relative; }
+        .search-input-wrap { flex: 1; position: relative; display: flex; align-items: center; }
         .search-input-wrap input {
           width: 100%; height: 100%;
           border: none; outline: none;
           font-family: 'Plus Jakarta Sans', sans-serif;
           font-size: .95rem; color: var(--brand);
-          padding: .6rem .75rem;
+          padding: .65rem .75rem;
           background: transparent;
         }
         .search-input-wrap input::placeholder { color: #a8a29e; }
         .search-submit {
-          background: var(--gold);
+          background: linear-gradient(135deg, var(--gold) 0%, #b8922e 100%);
           color: var(--brand);
           border: none; cursor: pointer;
-          padding: .7rem 1.75rem;
-          border-radius: 10px;
+          padding: .75rem 2rem;
+          border-radius: 12px;
           font-family: 'Plus Jakarta Sans', sans-serif;
-          font-size: .9rem; font-weight: 700;
-          letter-spacing: .02em;
+          font-size: .9rem; font-weight: 800;
+          letter-spacing: .03em;
           transition: all .25s;
           flex-shrink: 0;
           display: flex; align-items: center; gap: .4rem;
+          box-shadow: 0 4px 12px rgba(201,168,76,.4);
         }
-        .search-submit:hover { background: var(--gold-light); transform: translateY(-1px); }
+        .search-submit:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(201,168,76,.5); }
+
+        .hero-quick-cats {
+          display: flex; gap: .5rem; justify-content: center;
+          margin-top: 1.5rem; flex-wrap: wrap;
+        }
+        .hero-quick-cat {
+          display: flex; align-items: center; gap: .4rem;
+          background: rgba(255,255,255,.07);
+          border: 1px solid rgba(255,255,255,.12);
+          border-radius: 100px; padding: .4rem 1rem;
+          font-size: .78rem; font-weight: 600;
+          color: rgba(255,255,255,.75);
+          cursor: pointer; transition: all .2s;
+        }
+        .hero-quick-cat:hover { background: rgba(201,168,76,.2); border-color: rgba(201,168,76,.4); color: var(--gold-light); }
 
         /* ── TRUST BADGES ── */
         .trust-row {
@@ -1018,6 +1087,10 @@ export default function VincevicMarketplace() {
           .listings-grid { grid-template-columns: repeat(auto-fill, minmax(165px,1fr)); gap: .75rem; }
           .list-mode .card-img { width: 130px; min-width: 130px; }
           .toolbar-right { display: none; }
+          .hero-stats-row { gap: 1rem; }
+          .hero-stat-divider { display: none; }
+          .hero-search-section { padding: 2.5rem 1rem 3rem; min-height: auto; }
+          .hero-quick-cats { gap: .4rem; }
         }
         @media (max-width: 480px) {
           .listings-grid { grid-template-columns: repeat(2, 1fr); gap: .65rem; }
@@ -1043,10 +1116,10 @@ export default function VincevicMarketplace() {
             <span className="logo-sub">Shades · Kenya</span>
           </div>
           <div className="header-nav-right">
-            <a href="#" className="header-link">Services</a>
-            <a href="#" className="header-link">Portfolio</a>
-            <a href="#" className="header-link">About</a>
-            <a href="#" className="header-link">Contact</a>
+            <Link href="/services" className="header-link">Services</Link>
+            <Link href="/portfolio" className="header-link">Portfolio</Link>
+            <Link href="/about" className="header-link">About</Link>
+            <Link href="/contact" className="header-link">Contact</Link>
             <button className="header-cart-btn" onClick={() => setShowCart(true)}>
               🛒 Quote List
               {cartItems.length > 0 && <span className="cart-badge">{cartItems.length}</span>}
@@ -1058,13 +1131,28 @@ export default function VincevicMarketplace() {
       {/* ── HERO SEARCH ── */}
       <section className="hero-search-section">
         <div className="hero-search-inner">
-          <h1 className="hero-title">Find <em>Premium Outdoor Structures</em><br />Across Kenya</h1>
-          <p className="hero-sub">Car shades, gazebos, pagolas & security gates — custom fabricated and installed</p>
 
+          <div style={{ textAlign: "center", marginBottom: "1.1rem" }}>
+            <span className="hero-eyebrow">
+              <span className="hero-eyebrow-dot" />
+              Vincevic shades
+            </span>
+          </div>
+
+          <h1 className="hero-title">
+            <em>Custom Fabricated</em>
+            <span className="hero-title-line2">Shades, Gazebos & Security Gates</span>
+          </h1>
+          <p className="hero-sub">
+            Get premium outdoor structures designed, fabricated and installed across Kenya.
+          </p>
+
+         
+
+          {/* Search box */}
           <div className="search-box">
             <button className="search-location-btn" onClick={detectLocation}>
-              <span className="loc-pin">📍</span>
-              {locationDetecting ? "Detecting…" : location}
+               {locationDetecting ? "Detecting…" : location}
               <span style={{ opacity: .4, fontSize: ".75rem" }}>▾</span>
             </button>
             <div className="search-divider" />
@@ -1072,24 +1160,19 @@ export default function VincevicMarketplace() {
               <input
                 ref={searchRef}
                 type="text"
-                placeholder="Search for shades, gazebos, gates…"
+                placeholder="Search car shades, gazebos, gates…"
                 value={search}
                 onChange={e => setSearch(e.target.value)}
                 onKeyDown={e => e.key === "Enter" && searchRef.current?.blur()}
               />
             </div>
             <button className="search-submit" onClick={() => {}}>
-              <span>🔍</span> Search
+              🔍 Search
             </button>
           </div>
 
-          <div className="trust-row">
-            {TRUST_BADGES.map(b => (
-              <div key={b.label} className="trust-badge">
-                <span>{b.icon}</span> {b.label}
-              </div>
-            ))}
-          </div>
+         
+
         </div>
       </section>
 
@@ -1102,7 +1185,6 @@ export default function VincevicMarketplace() {
               className={`cat-pill ${category === c.id ? "active" : ""}`}
               onClick={() => setCategory(c.id)}
             >
-              <span className="cat-icon">{c.icon}</span>
               {c.label}
               <span className="cat-count">{c.count}</span>
             </button>
@@ -1115,11 +1197,11 @@ export default function VincevicMarketplace() {
         <div style={{ maxWidth: 1400, margin: "0 auto", padding: "0 1.25rem" }}>
           <div style={{ display: "flex", gap: ".5rem", paddingTop: ".75rem" }}>
             <button className={`filter-btn ${filterOpen ? "open" : ""}`} onClick={() => setFilterOpen(!filterOpen)}>
-              ⚡ Filters {filterOpen ? "▲" : "▼"}
+               Filters {filterOpen ? "▲" : "▼"}
             </button>
             {(priceMin || priceMax || location !== "All Kenya") && (
               <button className="btn-reset" onClick={() => { setPriceMin(""); setPriceMax(""); setLocation("All Kenya"); }}>
-                Clear filters ✕
+                Clear filters 
               </button>
             )}
           </div>
@@ -1164,7 +1246,7 @@ export default function VincevicMarketplace() {
       <div className="main-layout">
         {filtered.length === 0 ? (
           <div className="empty-wrap">
-            <div className="empty-icon">◈</div>
+            <div className="empty-icon"></div>
             <p className="empty-text">No listings found</p>
             <p className="empty-sub">Try adjusting your filters or search query</p>
           </div>
@@ -1173,7 +1255,7 @@ export default function VincevicMarketplace() {
             {/* Featured */}
             {featured.length > 0 && (
               <>
-                <div className="featured-label">⭐ Featured Listings</div>
+                <div className="featured-label"> Featured Listings</div>
                 <div className={`listings-grid ${viewMode === "list" ? "list-mode" : ""}`}>
                   {featured.map(l => <ListingCard key={l.id} item={l} viewMode={viewMode} saved={savedItems.has(l.id)} onSave={() => toggleSave(l.id)} onOpen={() => { setSelectedListing(l); setStep(1); }} onCart={() => addToCart(l)} />)}
                 </div>
@@ -1225,8 +1307,8 @@ export default function VincevicMarketplace() {
                     <span style={{ fontWeight: 700, fontSize: ".85rem" }}>{selectedListing.rating}</span>
                     <span style={{ color: "var(--muted)", fontSize: ".8rem" }}>({selectedListing.reviews} reviews)</span>
                   </div>
-                  <span style={{ color: "var(--muted)", fontSize: ".78rem" }}>👁 {selectedListing.views} views</span>
-                  <span style={{ color: "var(--muted)", fontSize: ".78rem" }}>📍 {selectedListing.location}</span>
+                  <span style={{ color: "var(--muted)", fontSize: ".78rem" }}> {selectedListing.views} views</span>
+                  <span style={{ color: "var(--muted)", fontSize: ".78rem" }}> {selectedListing.location}</span>
                 </div>
 
                 <div className="detail-price">
@@ -1254,13 +1336,13 @@ export default function VincevicMarketplace() {
                     <div className="seller-info">
                       <div className="seller-name">
                         {selectedListing.seller.name}
-                        <span className="verified-chip">✓ VERIFIED</span>
+                        <span className="verified-chip"> VERIFIED</span>
                       </div>
                       <div className="seller-since">Serving Kenya since {selectedListing.seller.since}</div>
                     </div>
                   </div>
                   <div style={{ display: "flex", gap: "1rem", paddingTop: ".75rem", borderTop: "1px solid var(--border)" }}>
-                    {[["📦", "500+", "Projects"], ["⭐", "4.8", "Rating"], ["⚡", "< 2hr", "Response"]].map(([icon, val, lbl]) => (
+                    {[[ "500+", "Projects"], [ "4.8", "Rating"], [ "< 2hr", "Response"]].map(([icon, val, lbl]) => (
                       <div key={lbl} style={{ textAlign: "center", flex: 1 }}>
                         <div style={{ fontSize: "1rem" }}>{icon}</div>
                         <div style={{ fontWeight: 800, fontSize: ".88rem", color: "var(--brand)" }}>{val}</div>
@@ -1374,8 +1456,18 @@ export default function VincevicMarketplace() {
               <span className="cart-total-label">Estimated Total</span>
               <span className="cart-total-val">{formatPrice(cartItems.reduce((s, i) => s + i.price, 0))}</span>
             </div>
+            <a
+              href={buildWhatsAppQuote()}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-checkout"
+              style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: ".5rem", textDecoration: "none", background: "#25d366", color: "#fff", marginBottom: ".5rem" }}
+              onClick={() => { showToast("Opening WhatsApp…"); }}
+            >
+              💬 Send Quote via WhatsApp
+            </a>
             <button className="btn-checkout" onClick={() => { showToast("📋 Quote request submitted! We'll call you shortly."); setCartItems([]); setShowCart(false); }}>
-              Request Combined Quote →
+              Request Callback Instead →
             </button>
           </div>
         )}
@@ -1429,13 +1521,13 @@ function ListingCard({ item, viewMode, saved, onSave, onOpen, onCart }: {
             <small>{item.category}</small>
           </div>
         )}
-        {item.verified && (
-          <div className="verified-overlay">✓ Verified Provider</div>
-        )}
+        {/* {item.verified && (
+          <div className="verified-overlay">Verified Provider</div>
+        )} */}
       </div>
 
       <div className="card-body">
-        <div className="card-location">📍 {item.location}</div>
+        <div className="card-location"> {item.location}</div>
         <h3 className="card-title">{item.title}</h3>
         <p className="card-desc">{item.desc}</p>
 
@@ -1447,7 +1539,6 @@ function ListingCard({ item, viewMode, saved, onSave, onOpen, onCart }: {
           <Stars rating={item.rating} />
           <span className="rating-num">{item.rating}</span>
           <span className="rating-count">({item.reviews})</span>
-          <span className="views-badge">👁 {item.views}</span>
         </div>
 
         <div className="card-price-row">
@@ -1457,7 +1548,7 @@ function ListingCard({ item, viewMode, saved, onSave, onOpen, onCart }: {
 
         <div className="card-actions" onClick={e => e.stopPropagation()}>
           <button className="btn-contact" onClick={onOpen}>
-            📩 Inquire
+             Inquire
           </button>
           <a href="https://wa.me/254720120616" target="_blank" rel="noopener noreferrer" className="btn-whatsapp" onClick={e => e.stopPropagation()}>
             💬

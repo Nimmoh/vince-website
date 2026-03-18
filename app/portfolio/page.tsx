@@ -296,8 +296,9 @@ export default function PortfolioPage() {
       <div className="page-hero">
         <h1 className="page-title">Our Portfolio</h1>
         <p className="page-subtitle">
-          Explore our completed projects across Kenya
+          Over 50 completed projects across Kenya from residential car shades to luxury gazebos and automated gates.
         </p>
+      
       </div>
 
       {/* Category Filter */}
@@ -308,6 +309,7 @@ export default function PortfolioPage() {
             className={`category-btn ${selectedCategory === cat.id ? 'active' : ''}`}
             onClick={() => setSelectedCategory(cat.id)}
           >
+            {cat.name}
           </button>
         ))}
       </div>
@@ -385,6 +387,29 @@ export default function PortfolioPage() {
           </div>
         </div>
       )}
+
+      {/* CTA */}
+      <div style={{ background: '#0f1117', padding: '4rem 2rem', textAlign: 'center', margin: '0 0 0' }}>
+        <div style={{ maxWidth: '700px', margin: '0 auto' }}>
+          <div style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '2.5rem', fontWeight: 700, color: '#fff', marginBottom: '1rem' }}>
+            Ready to Start Your Project?
+          </div>
+          <p style={{ color: 'rgba(255,255,255,0.55)', fontSize: '1rem', lineHeight: 1.7, marginBottom: '2rem' }}>
+            Get a free site visit and custom quote. Our team will assess your space and recommend the perfect solution.
+          </p>
+          <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+            <a href={`https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '254720120616'}?text=${encodeURIComponent('Hello! I saw your portfolio and would like a free quote.')}`}
+              target="_blank" rel="noopener noreferrer"
+              style={{ display: 'inline-flex', alignItems: 'center', gap: '.5rem', background: '#25d366', color: '#fff', padding: '.85rem 2rem', borderRadius: '6px', fontWeight: 700, textDecoration: 'none', fontSize: '.95rem' }}>
+              💬 WhatsApp Us
+            </a>
+            <a href="tel:0720120616"
+              style={{ display: 'inline-flex', alignItems: 'center', gap: '.5rem', background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.15)', color: '#fff', padding: '.85rem 2rem', borderRadius: '6px', fontWeight: 700, textDecoration: 'none', fontSize: '.95rem' }}>
+              📞 Call 0720 120 616
+            </a>
+          </div>
+        </div>
+      </div>
 
       {/* Footer */}
       <footer style={{ background: 'var(--ink)', color: 'var(--white)', padding: '4rem 2rem 2rem', marginTop: '4rem' }}>

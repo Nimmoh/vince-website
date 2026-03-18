@@ -796,10 +796,10 @@ export default function ServicesPage() {
         <div className="sv-hero-inner">
           <div className="sv-hero-eyebrow">Our Services</div>
           <h1 className="sv-hero-title">
-            Premium Outdoor Structures<br /><em>Built for Kenya</em>
+            Premium Outdoor Structures<br />
           </h1>
           <p className="sv-hero-sub">
-            Browse our full range of custom-fabricated structures — installed nationwide with a free site visit included.
+            Browse our full range of custom-fabricated structures installed nationwide with a free site visit included.
           </p>
           <div className="sv-search-box">
             <input
@@ -811,13 +811,7 @@ export default function ServicesPage() {
             />
             <button className="sv-search-btn">🔍 Search</button>
           </div>
-          <div className="sv-trust-row">
-            {TRUST_ITEMS.map(t => (
-              <div key={t.text} className="sv-trust-badge">
-                <span>{t.icon}</span> {t.text}
-              </div>
-            ))}
-          </div>
+         
         </div>
       </section>
 
@@ -832,7 +826,7 @@ export default function ServicesPage() {
                 className={`sv-cat-pill ${selectedCategory === cat.id ? 'active' : ''}`}
                 onClick={() => setSelectedCategory(cat.id)}
               >
-                <span>{cat.icon}</span> {cat.name}
+                <span></span> {cat.name}
                 <span className="sv-count">{count}</span>
               </button>
             );
@@ -845,7 +839,7 @@ export default function ServicesPage() {
         <div style={{ maxWidth: 1400, margin: '0 auto', padding: '0 1.5rem' }}>
           <div style={{ display: 'flex', gap: '.5rem', paddingTop: '.7rem' }}>
             <button className={`sv-filter-btn ${filterOpen ? 'open' : ''}`} onClick={() => setFilterOpen(!filterOpen)}>
-              ⚡ Filters {filterOpen ? '▲' : '▼'}
+               Filters {filterOpen ? '▲' : '▼'}
             </button>
             {priceMax && (
               <button className="sv-clear-btn" onClick={() => setPriceMax('')}>Clear ✕</button>
@@ -961,8 +955,8 @@ export default function ServicesPage() {
                   ))}
                 </div>
                 <div className="sv-free-visit">
-                  <div className="sv-free-visit-title">🎯 Free Site Visit Included</div>
-                  <div className="sv-free-visit-desc">We assess your site, take measurements, and provide a detailed custom quote — at no cost.</div>
+                  <div className="sv-free-visit-title"> Free Site Visit Included</div>
+                  <div className="sv-free-visit-desc">We assess your site, take measurements, and provide a detailed custom quote  at no cost.</div>
                 </div>
               </div>
 
@@ -973,11 +967,10 @@ export default function ServicesPage() {
                     <div className="sv-seller-avatar">V</div>
                     <div>
                       <div className="sv-seller-name">Vincevic Shades <span className="sv-verified">✓ VERIFIED</span></div>
-                      <div className="sv-seller-since">Serving Kenya since 2012</div>
                     </div>
                   </div>
                   <div className="sv-seller-stats">
-                    {[['📦', '500+', 'Projects'], ['⭐', '4.8', 'Rating'], ['⚡', '<2hr', 'Response']].map(([icon, val, lbl]) => (
+                    {[[ '500+', 'Projects'], [ '4.8', 'Rating'], [ '<2hr', 'Response']].map(([icon, val, lbl]) => (
                       <div key={lbl} className="sv-stat">
                         <div>{icon}</div>
                         <div className="sv-stat-val">{val}</div>
@@ -1140,7 +1133,6 @@ function ServiceCard({ service, viewMode, saved, onSave, onOpen, onCart, getBadg
             <small>{service.category}</small>
           </div>
         )}
-        <div className="sv-verified-badge">✓ Verified</div>
       </div>
 
       <div className="sv-card-body">
@@ -1153,7 +1145,6 @@ function ServiceCard({ service, viewMode, saved, onSave, onOpen, onCart, getBadg
             <Stars rating={service.rating} />
             <span className="sv-rnum">{service.rating}</span>
             <span className="sv-rcnt">({service.reviews || 0})</span>
-            {service.views && <span className="sv-views">👁 {service.views}</span>}
           </div>
         )}
 
@@ -1163,7 +1154,7 @@ function ServiceCard({ service, viewMode, saved, onSave, onOpen, onCart, getBadg
         </div>
 
         <div className="sv-card-actions" onClick={e => e.stopPropagation()}>
-          <button className="sv-btn-inquire" onClick={onOpen}>📩 Inquire</button>
+          <button className="sv-btn-inquire" onClick={onOpen}> Inquire</button>
           <a href="https://wa.me/254720120616" target="_blank" rel="noopener noreferrer" className="sv-btn-wa" onClick={e => e.stopPropagation()}>💬</a>
           <button className="sv-btn-cart" onClick={e => { e.stopPropagation(); onCart(); }}>🛒</button>
         </div>

@@ -231,7 +231,7 @@ export default function AboutPage() {
       <div className="page-hero">
         <h1 className="page-title">About Us</h1>
         <p className="page-subtitle">
-          Building Kenya's finest outdoor structures 
+          Building Kenya&apos;s finest outdoor structures since craftsmanship you can trust, quality that lasts.
         </p>
       </div>
 
@@ -284,6 +284,7 @@ export default function AboutPage() {
 
     
 
+
       {/* Our Values */}
       <div className="content-section">
         <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
@@ -293,28 +294,56 @@ export default function AboutPage() {
         </div>
         <div className="values-grid">
           <div className="value-card">
+            <div className="value-icon"></div>
             <h3 className="value-title">Quality First</h3>
             <p className="value-desc">
-              We never compromise on materials or workmanship. Every structure is built to last.
+              We never compromise on materials or workmanship. Every structure is built to last decades, not years.
             </p>
           </div>
           <div className="value-card">
+            <div className="value-icon"></div>
             <h3 className="value-title">Customer Focus</h3>
             <p className="value-desc">
-              Your vision guides our work. We listen, understand, and deliver beyond expectations.
+              Your vision guides our work. We listen, understand, and deliver beyond expectations every single time.
             </p>
           </div>
           <div className="value-card">
+            <div className="value-icon"></div>
             <h3 className="value-title">Innovation</h3>
             <p className="value-desc">
-              We embrace new techniques and designs while honoring traditional craftsmanship.
+              We embrace new techniques and designs while honoring traditional craftsmanship and proven methods.
             </p>
           </div>
           <div className="value-card">
+            <div className="value-icon"></div>
             <h3 className="value-title">Integrity</h3>
             <p className="value-desc">
-              Honest pricing, transparent processes, and reliable service in every interaction.
+              Honest pricing, transparent processes, and reliable service in every interaction — no hidden costs.
             </p>
+          </div>
+        </div>
+      </div>
+
+      {/* How We Work */}
+      <div style={{ background: '#fff', padding: '4rem 2rem' }}>
+        <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
+          <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
+            <h2 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '2.5rem', color: 'var(--ink)', marginBottom: '0.75rem' }}>How We Work</h2>
+            <p style={{ color: 'var(--slate-light)', fontSize: '1rem', maxWidth: '500px', margin: '0 auto' }}>From first call to final installation — a seamless process built around you.</p>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '2rem' }}>
+            {[
+              { step: '01', title: 'Free Consultation', desc: 'We visit your site at no cost, assess your space and understand your requirements.' },
+              { step: '02', title: 'Custom Design', desc: 'Our team creates a tailored design and provides a detailed, transparent quote.' },
+              { step: '03', title: 'Fabrication', desc: 'We fabricate your structure using premium materials in our Nairobi workshop.' },
+              { step: '04', title: 'Installation', desc: 'Our skilled team installs your structure efficiently, leaving your property spotless.' },
+            ].map(({ step, title, desc }) => (
+              <div key={step} style={{ textAlign: 'center', padding: '2rem 1.5rem', border: '1px solid rgba(201,168,76,0.18)', borderRadius: '4px' }}>
+                <div style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '3rem', fontWeight: 700, color: 'var(--gold)', opacity: 0.5, lineHeight: 1, marginBottom: '0.75rem' }}>{step}</div>
+                <div style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: '1.3rem', fontWeight: 600, color: 'var(--ink)', marginBottom: '0.75rem' }}>{title}</div>
+                <p style={{ fontSize: '0.88rem', color: 'var(--slate-light)', lineHeight: 1.6 }}>{desc}</p>
+              </div>
+            ))}
           </div>
         </div>
       </div>
